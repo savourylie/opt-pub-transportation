@@ -1,3 +1,11 @@
 {
-  "TODO": "Complete this Schema! (Make sure to delete this Key/Value Pair!"
+	"$schema": "http://json-schema.org/schema#",
+
+    "station_id": null,
+	"train_id": null,
+	"direction": null,
+	"line": null,
+	"train_status": null,
+	"prev_station_id": null,
+	"prev_direction": null
 }
