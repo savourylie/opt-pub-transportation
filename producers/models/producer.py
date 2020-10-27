@@ -10,6 +10,10 @@ from confluent_kafka.avro import AvroProducer
 logger = logging.getLogger(__name__)
 
 
+BROKER_URL = "PLAINTEXT://localhost:9092"
+TOPIC_NAME = "org.udacity.opt_pub_transportation"
+
+
 class Producer:
     """Defines and provides common functionality amongst Producers"""
 
@@ -38,9 +42,11 @@ class Producer:
         #
         #
         self.broker_properties = {
-            # TODO
-            # TODO
-            # TODO
+            'bootstrap.servers': BROKER_URL,
+            'linger.ms': '500', # how long the producer's going to wait before sending the msg, the larger the number the larger the batch
+            'client.id': 'client01',
+            'enable.idempotent': True,
+            'acks': -1
         }
 
         # If the topic does not already exist, try to create it
@@ -49,8 +55,8 @@ class Producer:
             Producer.existing_topics.add(self.topic_name)
 
         # TODO: Configure the AvroProducer
-        # self.producer = AvroProducer(
-        # )
+        self.producer = AvroProducer(
+        )
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
@@ -60,7 +66,18 @@ class Producer:
         # the Kafka Broker.
         #
         #
-        logger.info("topic creation kafka integration incomplete - skipping")
+        client = AdminClient({"bootstrap.servers": BROKER_URL})
+        futures = client.create_topics(
+            [NewTopic(topic=self.topic_name, num_partitions=5, replication_factor=1)]
+        )
+
+        for _, future in futures.items():
+            try:
+                future.result()
+            except Exception as e:
+                pass
+
+        # logger.info("topic creation kafka integration incomplete - skipping")
 
     def time_millis(self):
         return int(round(time.time() * 1000))

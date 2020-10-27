@@ -1,11 +1,9 @@
 {
-	"$schema": "http://json-schema.org/schema#",
-
-    "station_id": null,
-	"train_id": null,
-	"direction": null,
-	"line": null,
-	"train_status": null,
-	"prev_station_id": null,
-	"prev_direction": null
+    "station_id": 40020,
+    "train_id": 1234567890,
+    "direction": "W",
+    "line": "Green Line",
+    "train_status": null,
+    "prev_station_id": null,
+    "prev_direction": null
 }
